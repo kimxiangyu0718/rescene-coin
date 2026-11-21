@@ -1,0 +1,52 @@
+{
+  "autoplay": true,
+  "shuffle": true,
+  "volume": 0.05,
+  "tracks": [
+    {
+      "title": "Glow Up",
+      "artist": "",
+      "src": "music/Glow-Up-mwqksl7f.mp3"
+    },
+    {
+      "title": "Busy Boy",
+      "artist": "",
+      "src": "music/Busy-Boy-mwqksl8c.mp3"
+    },
+    {
+      "title": "Pinball",
+      "artist": "",
+      "src": "music/Pinball-mwqksl8x.mp3"
+    },
+    {
+      "title": "Runaway",
+      "artist": "",
+      "src": "music/Runaway-mwqksl9n.mp3"
+    },
+    {
+      "title": "Inside Out",
+      "artist": "",
+      "src": "music/Inside-Out-mwqkslaa.mp3"
+    },
+    {
+      "title": "Deja Vu",
+      "artist": "",
+      "src": "music/Deja-Vu-mwqkslb2.mp3"
+    },
+    {
+      "title": "Pretty Girl",
+      "artist": "",
+      "src": "music/Pretty-Girl-mwqkslbs.mp3"
+    },
+    {
+      "title": "LOVE ATTACK",
+      "artist": "",
+      "src": "music/LOVE-ATTACK-mwqkslcf.mp3"
+    },
+    {
+      "title": "With",
+      "artist": "",
+      "src": "music/With-mwqkslda.mp3"
+    }
+  ]
+}

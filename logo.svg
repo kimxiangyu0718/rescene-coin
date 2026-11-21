@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="40%" r="70%">
+      <stop offset="0" stop-color="#2a2350"/>
+      <stop offset="1" stop-color="#0b0a16"/>
+    </radialGradient>
+    <linearGradient id="iri" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffd6f0"/>
+      <stop offset=".35" stop-color="#d9c8ff"/>
+      <stop offset=".7" stop-color="#b8f1ff"/>
+      <stop offset="1" stop-color="#fff4c9"/>
+    </linearGradient>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="10" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <circle cx="256" cy="256" r="256" fill="url(#bg)"/>
+  <circle cx="256" cy="256" r="196" fill="none" stroke="url(#iri)" stroke-width="3" opacity=".55"/>
+  <g filter="url(#glow)" fill="url(#iri)">
+    <path d="M256 92 C268 196 316 244 420 256 C316 268 268 316 256 420 C244 316 196 268 92 256 C196 244 244 196 256 92 Z"/>
+  </g>
+  <g fill="#fff" opacity=".9">
+    <circle cx="372" cy="150" r="7"/><circle cx="150" cy="364" r="5"/><circle cx="160" cy="160" r="3.5"/><circle cx="366" cy="360" r="3"/>
+  </g>
+</svg>

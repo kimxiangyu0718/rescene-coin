@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Community Token</title>
+<meta name="description" content="비공식 개인 프로젝트 커뮤니티 토큰 · 다섯 개의 빛 중 하나를 고르고 무료 에어드랍을 받아 보세요.">
+<meta name="theme-color" content="#07060f">
+<link rel="icon" href="logo.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<!-- 로딩 화면 -->
+<div class="loader" id="loader" aria-hidden="true"><img src="logo.svg" alt=""><span></span></div>
+
+<canvas id="stars" aria-hidden="true"></canvas>
+<div class="cursor-glow" id="cursorGlow" aria-hidden="true"></div>
+
+<header class="nav" id="nav">
+  <a href="#top" class="nav-brand"><img src="logo.svg" alt=""><span data-bind="brandEn"></span></a>
+  <nav class="nav-links">
+    <a href="#about">소개</a>
+    <a href="#airdrop">에어드랍</a>
+    <a href="#token">토큰 정보</a>
+    <a href="#legal">고지사항</a>
+  </nav>
+  <button class="btn btn-ghost btn-sm" id="navWallet">지갑 연결</button>
+</header>
+<div class="notice" id="notice" role="note"><span data-bind="notice"></span> <a href="#legal">자세히</a></div>
+
+<main id="top">
+  <!-- HERO -->
+  <section class="hero">
+    <div class="orb orb-a" aria-hidden="true"></div>
+    <div class="orb orb-b" aria-hidden="true"></div>
+    <div class="orb orb-c" aria-hidden="true"></div>
+    <div class="hero-logo-wrap reveal">
+      <div class="ring r1" aria-hidden="true"></div>
+      <div class="ring r2" aria-hidden="true"></div>
+      <img class="hero-logo" src="logo.svg" alt="로고">
+    </div>
+    <p class="eyebrow reveal" data-bind="symbol"></p>
+    <h1 class="reveal"><span class="ko split" data-bind="brand"></span><span class="en" data-bind="brandEn"></span></h1>
+    <p class="tagline reveal" data-bind="tagline"></p>
+    <div class="hero-cta reveal">
+      <a href="#airdrop" class="btn btn-primary btn-shine">✦ 에어드랍 받기</a>
+      <button class="btn btn-ghost" data-action="watch">지갑에 토큰 추가</button>
+    </div>
+    <a href="#about" class="scroll-hint" aria-label="아래로"><span></span></a>
+  </section>
+
+  <div class="marquee" aria-hidden="true"><div class="marquee-track" id="marquee"></div></div>
+
+  <!-- ABOUT -->
+  <section class="section" id="about">
+    <p class="kicker reveal">ABOUT</p>
+    <h2 class="reveal">프로젝트 소개</h2>
+    <div class="about-text reveal" id="introText"></div>
+    <ul class="chips">
+      <li class="reveal"><i>✦</i><b>무료 배포</b><span>판매하지 않아요</span></li>
+      <li class="reveal"><i>⟡</i><b>고정 발행량</b><span>추가 발행 불가</span></li>
+      <li class="reveal"><i>✧</i><b>소스코드 공개</b><span>BaseScan 검증 완료</span></li>
+      <li class="reveal"><i>◈</i><b>Base 네트워크</b><span>수수료가 아주 저렴</span></li>
+    </ul>
+  </section>
+
+  <!-- HOW -->
+  <section class="section" id="how">
+    <p class="kicker reveal">HOW TO</p>
+    <h2 class="reveal">참여 방법</h2>
+    <ol class="steps">
+      <li class="reveal"><span class="step-n">01</span><b>지갑 준비</b><p>MetaMask, Trust Wallet, Coinbase Wallet 같은 지갑 앱을 설치하고, 수수료로 쓸 Base 네트워크의 ETH를 아주 조금 준비해요.</p></li>
+      <li class="reveal"><span class="step-n">02</span><b>빛 고르기</b><p>다섯 개의 빛 중 마음에 드는 하나를 골라요. 고른 빛에 한 표가 더해져요.</p></li>
+      <li class="reveal"><span class="step-n">03</span><b>받기</b><p>버튼을 누르고 지갑에서 확인하면 토큰이 바로 도착해요. 지갑당 한 번!</p></li>
+    </ol>
+  </section>
+
+  <!-- AIRDROP -->
+  <section class="section" id="airdrop">
+    <p class="kicker reveal">FREE AIRDROP</p>
+    <h2 class="reveal">마음에 드는 빛을 골라 주세요</h2>
+    <p class="lead reveal">지갑 하나당 한 번, <b id="perClaim">—</b> <span data-bind="symbol"></span>을(를) <b>무료</b>로 받을 수 있어요.</p>
+
+    <div class="cards" id="cards" role="radiogroup" aria-label="빛 선택"></div>
+
+    <div class="claim-panel reveal">
+      <div class="claim-stats">
+        <div><span class="stat-label">참여한 사람</span><b><span id="totalClaims">—</span></b></div>
+        <div><span class="stat-label">남은 수량</span><b id="remaining">—</b></div>
+        <div><span class="stat-label">1인당</span><b id="perClaim2">—</b></div>
+      </div>
+      <div class="progress" aria-hidden="true"><i id="dropProgress"></i></div>
+      <div id="claimArea">
+        <p class="claim-hint" id="claimHint">빛을 하나 고른 뒤 아래 버튼을 눌러 주세요.</p>
+        <button class="btn btn-primary btn-lg btn-shine" id="claimBtn" disabled>빛을 골라 주세요</button>
+      </div>
+      <div id="claimMsg" class="msg hidden"></div>
+      <p class="fine"><b class="fine-key">· 이 코인은 실제 가치가 없으며, 그냥 재미로 소장·수집하는 기념용 코인이에요.</b><br><b class="fine-key">· 개발자는 돈, 코인, 개인정보, 지갑 복구 문구 등 그 무엇도 요구하지 않아요.</b><br>· 에어드랍은 완전 무료예요.<br>· 받을 때 Base 네트워크의 아주 적은 수수료(ETH)가 필요해요.<br>· 휴대폰에서는 지갑 앱 안의 브라우저에서 열어야 해요. 받기 버튼을 누르면 지갑 앱으로 바로 열 수 있어요.</p>
+    </div>
+  </section>
+
+  <!-- TOKEN INFO -->
+  <section class="section" id="token">
+    <p class="kicker reveal">TOKEN</p>
+    <h2 class="reveal">토큰 정보</h2>
+    <dl class="info">
+      <div class="reveal"><dt>온체인 이름</dt><dd id="tName">—</dd></div>
+      <div class="reveal"><dt>온체인 심볼</dt><dd id="tSymbol">—</dd></div>
+      <div class="reveal"><dt>네트워크</dt><dd id="tNet">—</dd></div>
+      <div class="reveal"><dt>총 발행량</dt><dd id="tSupply">—</dd></div>
+      <div class="wide reveal"><dt>계약 주소</dt><dd><span class="mono" id="tAddr">—</span> <button class="btn btn-ghost btn-xs" id="copyAddr">복사</button></dd></div>
+    </dl>
+    <div class="hero-cta left reveal">
+      <a class="btn btn-ghost" id="explorerLink" target="_blank" rel="noopener">BaseScan에서 보기 ↗</a>
+      <button class="btn btn-ghost" data-action="watch">지갑에 토큰 추가</button>
+    </div>
+  </section>
+
+  <!-- LEGAL -->
+  <section class="section" id="legal">
+    <p class="kicker reveal">NOTICE</p>
+    <h2 class="reveal">고지사항</h2>
+    <div class="legal reveal" id="legalBody"></div>
+  </section>
+</main>
+
+<footer class="footer">
+  <img src="logo.svg" alt="" width="36" height="36">
+  <p data-bind="footer"></p>
+  <p class="contact" id="footerContact"></p>
+</footer>
+
+<!-- 음악 플레이어 -->
+<div class="player" id="player" aria-label="배경음악 플레이어">
+  <div class="player-progress" id="pProgress" role="slider" aria-label="재생 위치" tabindex="0"><i id="pProgressFill"></i></div>
+  <div class="player-inner">
+    <div class="disc" id="pDisc" aria-hidden="true"><span></span></div>
+    <div class="p-meta">
+      <div class="p-title" id="pTitle">배경음악</div>
+      <div class="p-artist"><span class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span id="pArtist">—</span> · <span id="pTime">0:00</span></div>
+    </div>
+    <div class="p-controls">
+      <button class="p-btn" id="pPrev" aria-label="이전 곡">⏮</button>
+      <button class="p-btn p-play" id="pPlay" aria-label="재생">▶</button>
+      <button class="p-btn" id="pNext" aria-label="다음 곡">⏭</button>
+    </div>
+    <div class="p-extra">
+      <button class="p-btn" id="pMute" aria-label="음소거">🔊</button>
+      <input type="range" id="pVol" min="0" max="1" step="0.01" aria-label="볼륨">
+      <button class="p-btn" id="pListBtn" aria-label="재생 목록">☰</button>
+    </div>
+  </div>
+  <ul class="playlist hidden" id="pList"></ul>
+  <audio id="audio" preload="metadata"></audio>
+</div>
+
+<!-- 첫 방문 고지 동의 -->
+<div class="modal hidden" id="consent" role="dialog" aria-modal="true" aria-labelledby="consentTitle">
+  <div class="modal-card">
+    <img src="logo.svg" alt="" width="56" height="56">
+    <h3 id="consentTitle">들어가기 전에 꼭 읽어 주세요</h3>
+    <ul class="consent-list" id="consentList"></ul>
+    <label class="check"><input type="checkbox" id="consentCheck"> 위 내용을 모두 읽고 이해했습니다.</label>
+    <button class="btn btn-primary btn-lg" id="consentBtn" disabled>확인하고 입장하기</button>
+  </div>
+</div>
+
+<!-- 휴대폰: 지갑 앱으로 열기 -->
+<div class="modal hidden" id="walletSheet" role="dialog" aria-modal="true" aria-labelledby="walletTitle">
+  <div class="modal-card sheet">
+    <h3 id="walletTitle">지갑 앱으로 열기</h3>
+    <p class="sheet-sub">휴대폰에서는 지갑 앱 안에서 이 사이트를 열어야 토큰을 받을 수 있어요. 쓰는 지갑을 골라 주세요.</p>
+    <div class="wallet-list">
+      <a class="wallet-btn" data-wallet="metamask"><span class="wi" style="background:#f6851b">M</span>MetaMask</a>
+      <a class="wallet-btn" data-wallet="trust"><span class="wi" style="background:#0500ff">T</span>Trust Wallet</a>
+      <a class="wallet-btn" data-wallet="coinbase"><span class="wi" style="background:#0052ff">C</span>Coinbase Wallet</a>
+      <a class="wallet-btn" data-wallet="okx"><span class="wi" style="background:#111;border:1px solid #444">O</span>OKX Wallet</a>
+      <button type="button" class="wallet-btn" id="exodusBtn"><span class="wi" style="background:linear-gradient(135deg,#00bfff,#8a2be2)">E</span>Exodus</button>
+    </div>
+    <div class="exodus-guide hidden" id="exodusGuide">
+      <b>Exodus로 받는 방법</b>
+      <ol>
+        <li>아래 버튼으로 사이트 링크를 복사해요.</li>
+        <li>Exodus 앱을 열고 <b>Web3 / 브라우저</b> 화면으로 가요.</li>
+        <li>검색창에 링크를 붙여 넣어 사이트를 열고, 빛을 골라 받기를 눌러요.</li>
+      </ol>
+      <p>⚠ Exodus 휴대폰 앱의 Web3 브라우저는 일부 지갑에서만 보여요(Exodus 안내 기준: 2026년 4월 22일 이전에 만든 지갑). 앱에 브라우저가 없다면 <b>PC의 Exodus 브라우저 확장 프로그램</b>으로 이 사이트를 열거나, 위의 다른 지갑을 이용해 주세요.</p>
+      <button class="btn btn-primary btn-sm" id="exodusCopy">사이트 링크 복사</button>
+    </div>
+    <div class="sheet-other">
+      <b>다른 지갑을 쓰고 있다면</b>
+      <p>링크를 복사해서, 지갑 앱의 브라우저(검색창)에 붙여 넣어 주세요.</p>
+      <button class="btn btn-ghost btn-sm" id="copyLink">사이트 링크 복사</button>
+    </div>
+    <button class="btn btn-ghost btn-sm sheet-close" id="walletClose">닫기</button>
+  </div>
+</div>
+
+<div class="toast hidden" id="toast"></div>
+<canvas id="confetti" aria-hidden="true"></canvas>
+
+<script src="ethers.umd.min.js"></script>
+<script src="abi.js"></script>
+<script src="config.js"></script>
+<script src="chain-config.js"></script>
+<script src="legal.js"></script>
+<script src="effects.js"></script>
+<script src="player.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
